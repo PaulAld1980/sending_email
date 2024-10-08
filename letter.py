@@ -1,26 +1,16 @@
-from dotenv import load_dotenv
-load_dotenv()
-
 import os
 import smtplib
 
-print("Type recipient's email")
-recipients_email = input()
-print("Type recipient's name")
-recipients_name = input()
 
-print("Type sender's email")
-senders_email = input()
-print("Type sender's name")
-senders_name = input()
+from dotenv import load_dotenv
+load_dotenv()
 
-print("Type the title of letter")
-title = input()
-
+recipients_email = input("input recipients email: ")
+recipients_name = input("input recipients name: ")
+senders_email = input("input your email adress: ")
+senders_name = input("input your name: ")
+title = input("input the title of your letter: ")
 url = "https://dvmn.org/referrals/QSRDMwTyHx3x7oBaTQww14M3dV7niodGMhKv9r6s/"
-
-print("""
-""")
 
 letter = f"""From: {senders_email}
 To: {recipients_email}
@@ -47,7 +37,6 @@ Content-Type: text/plain; charset="UTF-8";
 letter = letter.replace("%friend_name%", recipients_name)
 letter = letter.replace("%my_name%", senders_name)
 letter = letter.replace("%website%", url)
-
 letter = letter.encode("UTF-8")
 
 login = os.getenv("LOGIN")
@@ -57,5 +46,3 @@ server = smtplib.SMTP_SSL('smtp.mail.ru:465')
 server.login(login, password)
 server.sendmail(senders_email, recipients_email, letter)
 server.quit()
-
-print(letter)
